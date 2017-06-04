@@ -16,5 +16,10 @@ namespace AIWar
             Vector deltaPosition = deltaSpeed * usecTimeStep + me.Speed;
             return deltaPosition;
         }
+
+        static public Vector calculateRebound(MovingElement me, Element e,Vector impactPosition)
+        {
+            return new Vector(0, 0);
+        }
     }
 }
