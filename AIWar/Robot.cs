@@ -8,5 +8,17 @@ namespace AIWar
 {
     class Robot
     {
+        public Robot(string name)
+        {
+            Name = name;
+        }
+        private string _name;
+
+        public string Name { get => _name; set => _name = value; }
+
+        public void decision(int currentTimeMsec)
+        {
+
+        }
     }
 }
