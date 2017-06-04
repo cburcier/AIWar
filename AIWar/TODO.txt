@@ -1,0 +1,26 @@
+﻿
+chaque item a des points de vie
+
+capteur :	
+			- damage direction
+			- GPS or delta position
+			- visuel en cone avec zone d'ombre,
+			- infrarouge en cone 
+			- radio en cercle plus court
+
+arme :		- mitraillette (damage proportionnelle a la distance)
+			- missile va tout doirt jusqu a impact en nombre limite
+			- piege ??
+			- leure??
+			- corps a corps (range, rayon de balayage, puissance)
+			- bouclier
+			- booster
+
+robot :     - limitation en batterie
+			- moteur
+			- poids
+			- armure
+
+concept : 
+			- 1Vs1 no commande or lagged commande (pour empecher pilotage)
+			- multi robot en mode general des armees (3/10/1000?)
