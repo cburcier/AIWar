@@ -9,7 +9,7 @@ capteur :
 			- radio en cercle plus court
 
 arme :		- mitraillette (damage proportionnelle a la distance)
-			- missile va tout doirt jusqu a impact en nombre limite
+			- missile va tout droit jusqu a impact en nombre limite
 			- piege ??
 			- leure??
 			- corps a corps (range, rayon de balayage, puissance)
