@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace AIWar
 {
-    using RobotParty = List<Robot>;
+    using RobotTeam = List<Robot>;
 
     class GameMaster
     {
         //Config
         private int _timeStepMsec;
         private int _gameTotalTimeMsec;
+        private Universe _univ;
 
         //double list for list of opponent, each opponent as a list of bot
-        private List<RobotParty> _robotsList;
+        private List<RobotTeam> _robotsList;
 
         public int TimeStepMsec { get => _timeStepMsec; set => _timeStepMsec = value; }
         public int GameTotalTimeMsec { get => _gameTotalTimeMsec; set => _gameTotalTimeMsec = value; }
+        internal Universe Univ { get => _univ; set => _univ = value; }
 
         public void runGame()
         {
@@ -26,7 +28,9 @@ namespace AIWar
             TimeStepMsec = 100;
             GameTotalTimeMsec = 300000;
 
-            //init elem
+            //init Universe
+            Rectangle shape = new Rectangle()
+            Univ = new Universe(shape);
 
             //init robot
 
@@ -44,6 +48,7 @@ namespace AIWar
                 }
 
                 //Move the universe to next timeStep
+                Universe.
 
                 currentTime += TimeStepMsec;
             }

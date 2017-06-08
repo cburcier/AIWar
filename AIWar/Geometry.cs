@@ -41,17 +41,29 @@ namespace AIWar
         }
     }
 
-    interface iShape
-    {}
-
-    class Cuboid : iShape
+    abstract class Shape
     {
-        Cuboid(Vector dims)
-        {
-            Dims = Dims;
-        }
-        private Vector _dims;
+    }
 
-        internal Vector Dims { get => _dims; set => _dims = value; }
+    class Rectangle : Shape
+    {
+        private Vector _l;
+        private Vector _w;
+
+        Rectangle(Vector l,Vector w)
+        {
+            L = l;
+            W = w;
+        }
+
+        internal Vector W { get => _w; set => _w = value; }
+        internal Vector L { get => _l; set => _l = value; }
+    }
+
+    class Circle : Shape
+    {
+        private double _radius;
+
+        public double Radius { get => _radius; set => _radius = value; }
     }
 }

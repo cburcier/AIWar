@@ -8,41 +8,45 @@ namespace AIWar
 {
     abstract class Element
     {
-        
-        private iShape _shape;
-        private string _name;
-        private Vector _position;
 
-        public Element(string name, iShape shape)
+        private string _name;
+        private Shape _elemShape;
+        private Vector _position;
+        private Vector _prevPosition;
+        private double _weight;
+        private bool _isStatic;
+        private Vector _speed;
+
+        public Element(string name, Shape shape, double weight)
         {
             Name = name;
-            Shape = shape;
-        }
-
-        internal iShape Shape { get => _shape; set => _shape = value; }
-        public string Name { get => _name; set => _name = value; }
-        internal Vector Position { get => _position; set => _position = value; }
-    }
-
-    abstract class StaticElement : Element
-    {
-        public StaticElement(string name, iShape shape) : base(name, shape) { }
-    }
-
-    abstract class MovingElement : Element
-    {
-        public Vector tempPosition;
-        private double _weight;
-        private Vector _speed;
-        
-        public MovingElement(string name, iShape shape, double weight) : base(name, shape)
-        {
+            ElemShape = shape;
             Weight = weight;
+            if (Weight == double.MaxValue)
+            {
+                IsStatic = true;
+            }
         }
 
-        public abstract Vector getSelfForceApplied();
-
+        public string Name { get => _name; set => _name = value; }
+        internal Vector Position
+        {
+            get => _position;
+            set
+            {
+                PrevPosition = _position;
+                _position = value;
+            }
+        }
+        internal Shape ElemShape { get => _elemShape; set => _elemShape = value; }
         internal double Weight { get => _weight; set => _weight = value; }
         internal Vector Speed { get => _speed; set => _speed = value; }
+        public bool IsStatic { get => _isStatic; set => _isStatic = value; }
+        internal Vector PrevPosition { get => _prevPosition; set => _prevPosition = value; }
+
+        public Vector getSelfForceApplied()
+        {
+            return new Vector(0, 0);
+        }
     }
 }

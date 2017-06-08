@@ -11,45 +11,47 @@ namespace AIWar
         //universe config
         private double _startReversionCoeff;
 
-        private List<MovingElement> _mElemList = new List<MovingElement>();
-        private List<StaticElement> _sElemList = new List<StaticElement>();
+        private List<Element> _movingElemList = new List<Element>();
+        private List<Element> _staticElemList = new List<Element>();
+        private CollisionManager _collisionManager ;
 
         public Universe()
         {
             //config
             StartReversionCoeff = 10;
+            _collisionManager = new SimpleCollisionManager();
         }
 
         public double StartReversionCoeff { get => _startReversionCoeff; set => _startReversionCoeff = value; }
 
         public void ProcessStep(int timeStep)
         {
-            foreach (MovingElement me in _mElemList)
+            foreach (Element elem in _movingElemList)
             {
                 //get the forces
-                Vector force = GetForces(me);
+                Vector force = GetForces(elem);
                 //get the next Position 
-                me.Speed = me.Speed + me.Weight * force * timeStep;
-                me.tempPosition = me.Speed * timeStep;
+                elem.Speed = elem.Speed + elem.Weight * force * timeStep;
+                elem.Position = elem.Speed * timeStep;
             }
-            foreach (MovingElement me in _mElemList)
+            foreach (Element me in _movingElemList)
             {
-                //check collision/damages 
+                //check collision/damages
             }
         }
 
-        public Vector GetForces(MovingElement me)
+        public Vector GetForces(Element elem)
         {
-            // acceleration propre de l'element
-            Vector force = me.getSelfForceApplied();
-            // frottement de demarage
-            Vector startReversion = force/force.norm() * me.Weight * Math.Exp(-me.Speed.norm() / StartReversionCoeff);
-            // frottement du terrain
-            Vector frictionForce = -GetFrictionCoeff(me) * me.Speed * me.Weight;
+            // acceleration propre de l'eleelemnt
+            Vector force = elem.getSelfForceApplied();
+            // frotteelemnt de demarage
+            Vector startReversion = force/force.norm() * elem.Weight * Math.Exp(-elem.Speed.norm() / StartReversionCoeff);
+            // frotteelemnt du terrain
+            Vector frictionForce = -GetFrictionCoeff(elem) * elem.Speed * elem.Weight;
             return force+startReversion+frictionForce;
         }
 
-        public double GetFrictionCoeff(MovingElement me)
+        public double GetFrictionCoeff(Element elem)
         {
             // peut dependre du type de terrain (fonction de position), du type de l'element (un missile ne roule pas) etc...
             return 0;
