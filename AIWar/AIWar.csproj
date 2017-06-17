@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Battery.cs" />
     <Compile Include="Captor.cs" />
     <Compile Include="CollisionManager.cs" />
     <Compile Include="Element.cs" />
@@ -105,7 +106,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Robot.cs" />
     <Compile Include="Geometry.cs" />
+    <Compile Include="RobotUtils.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="Tools.cs" />
     <Compile Include="Universe.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

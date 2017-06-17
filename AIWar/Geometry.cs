@@ -50,7 +50,7 @@ namespace AIWar
         private Vector _l;
         private Vector _w;
 
-        Rectangle(Vector l,Vector w)
+        public Rectangle(Vector l,Vector w)
         {
             L = l;
             W = w;
@@ -63,6 +63,11 @@ namespace AIWar
     class Circle : Shape
     {
         private double _radius;
+
+        public Circle(double radius)
+        {
+            Radius = Radius;
+        }
 
         public double Radius { get => _radius; set => _radius = value; }
     }

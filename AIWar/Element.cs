@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIWar
 {
-    abstract class Element
+    abstract class Element: IElement
     {
 
         private string _name;
@@ -44,9 +44,12 @@ namespace AIWar
         public bool IsStatic { get => _isStatic; set => _isStatic = value; }
         internal Vector PrevPosition { get => _prevPosition; set => _prevPosition = value; }
 
-        public Vector getSelfForceApplied()
-        {
-            return new Vector(0, 0);
-        }
+        public abstract Vector GetSelfForceApplied();
+
+        //IElement interface
+        public abstract void OnInit();
+        public abstract void OnDeath();
+        public abstract void ApplyDamage(Damage d);
+        public abstract void ProcessStep(double timeStep);
     }
 }

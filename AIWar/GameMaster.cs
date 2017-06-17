@@ -11,46 +11,44 @@ namespace AIWar
     class GameMaster
     {
         //Config
-        private int _timeStepMsec;
-        private int _gameTotalTimeMsec;
+        private double _timeStep;
+        private double _gameTotalTime;
         private Universe _univ;
 
         //double list for list of opponent, each opponent as a list of bot
         private List<RobotTeam> _robotsList;
 
-        public int TimeStepMsec { get => _timeStepMsec; set => _timeStepMsec = value; }
-        public int GameTotalTimeMsec { get => _gameTotalTimeMsec; set => _gameTotalTimeMsec = value; }
+        public double TimeStep { get => _timeStep; set => _timeStep = value; }
+        public double GameTotalTime { get => _gameTotalTime; set => _gameTotalTime = value; }
         internal Universe Univ { get => _univ; set => _univ = value; }
 
         public void runGame()
         {
             //get config
-            TimeStepMsec = 100;
-            GameTotalTimeMsec = 300000;
+            TimeStep = 0.1;
+            GameTotalTime = 600;
 
             //init Universe
-            Rectangle shape = new Rectangle()
-            Univ = new Universe(shape);
+            Rectangle shape = new Rectangle(new Vector(0,0), new Vector(0,0)); // FIXME faut initializer cproprement !
+            Univ = new Universe();
 
             //init robot
 
             //run game
-            int currentTime = 0;
-            for (int i = 0; i < GameTotalTimeMsec / TimeStepMsec; ++i)
+            double currentTime = 0;
+            for (int i = 0; i < GameTotalTime / TimeStep; ++i)
             {
                 //Process decision function on robot
-                foreach (RobotParty botList in _robotsList)
+                foreach (RobotTeam botList in _robotsList)
                 {
                     foreach (Robot bot in botList)
                     {
-                        bot.decision(currentTime);
+                        bot.Decision(currentTime);
                     }
                 }
 
                 //Move the universe to next timeStep
-                Universe.
-
-                currentTime += TimeStepMsec;
+                currentTime += TimeStep;
             }
 
         }
