@@ -16,14 +16,14 @@ namespace AIWar
 
         public Battery(double powerMax, double energyMax, double healthMax, double weight) : base(healthMax, weight)
         {
-            PowerMax = powerMax;
-            EnergyMax = energyMax;
-            Energy = EnergyMax;
+            _powerMax = powerMax;
+            _energyMax = energyMax;
+            _energy = EnergyMax;
         }
 
-        public double PowerMax { get => _powerMax; set => _powerMax = value; }
-        public double Energy { get => _energy; set => _energy = value; }
-        public double EnergyMax { get => _energyMax; set => _energyMax = value; }
+        public double PowerMax { get => _powerMax; }
+        public double Energy { get => _energy;}
+        public double EnergyMax { get => _energyMax;}
         public double AvailablePower { get => _power; }
 
         public double UsePower(double powerNeeded)
@@ -40,7 +40,16 @@ namespace AIWar
 
         public override void ProcessStep(double timeStep)
         {
-
+            _energy -= (PowerMax - _power) * timeStep;
+            if (Energy <= 0)
+            {
+                _power = 0;
+            }
+            else
+            {
+                // TO DO : courbe de puissance
+                _power = _powerMax;
+            }
         }
 
         public override void OnInit()

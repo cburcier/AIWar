@@ -12,9 +12,8 @@ namespace AIWar
         private double _healthMax;
         private double _weight;
         private double _totalWeight = -1;
-
-
         private List<RobotElement> _children;
+        private Battery _batteryPluged;
 
         public RobotElement(double healthMax, double weight)
         {
@@ -41,6 +40,7 @@ namespace AIWar
             }
         }
         internal List<RobotElement> Children { get => _children; set => _children = value; }
+        internal Battery BatteryPluged { get => _batteryPluged; set => _batteryPluged = value; }
 
         public void ApplyDamage(Damage dam)
         {
@@ -52,6 +52,13 @@ namespace AIWar
             }
         }
 
+        public void PlugBattery(Battery battery)
+        {
+            BatteryPluged = battery;
+        }
+
+
+        // IElement Interface
         public Vector GetForceApplied() { return new Vector(0, 0); }
         public abstract void ProcessStep(double timeStep);
         public void OnDeath() { }
