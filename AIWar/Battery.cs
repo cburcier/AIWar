@@ -38,7 +38,7 @@ namespace AIWar
         }
 
 
-        public override void ProcessStep(double timeStep)
+        public override void OnProcessStep(double timeStep)
         {
             _energy -= (PowerMax - _power) * timeStep;
             if (Energy <= 0)

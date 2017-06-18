@@ -47,7 +47,7 @@ namespace AIWar
         public abstract Vector GetSelfForceApplied();
 
         //IElement interface
-        public abstract void OnInit();
+        public abstract void Init();
         public abstract void OnDeath();
         public abstract void ApplyDamage(Damage d);
         public abstract void ProcessStep(double timeStep);

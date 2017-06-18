@@ -75,7 +75,7 @@ namespace AIWar
 
     interface IElement
     {
-        void OnInit();
+        void Init();
         void OnDeath();
         void ApplyDamage(Damage d);
         void ProcessStep(double timeStep);

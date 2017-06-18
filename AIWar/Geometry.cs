@@ -13,8 +13,8 @@ namespace AIWar
             this.x = x;
             this.y = y;
         }
-        double x;
-        double y;
+        public double x;
+        public double y;
         public double norm()
         {
             return Math.Sqrt(x * x + y * y);
@@ -23,6 +23,11 @@ namespace AIWar
         public static Vector operator +(Vector v1, Vector v2)
         {
             return new Vector(v1.x+v2.x,v1.y+v2.y);
+        }
+
+        public static double operator *(Vector v1, Vector v2)
+        {
+            return v1.x * v2.x + v1.y * v2.y;
         }
 
         public static Vector operator *(double m,Vector v)
@@ -36,6 +41,11 @@ namespace AIWar
         }
 
         public static Vector operator /(Vector v, double m)
+        {
+            return new Vector(v.x / m, v.y / m);
+        }
+
+        public static Vector operator /(double m,Vector v)
         {
             return new Vector(v.x / m, v.y / m);
         }

@@ -11,7 +11,7 @@ namespace AIWar
         private double _health;
         private double _healthMax;
         private double _weight;
-        private double _totalWeight = -1;
+        private Robot _parentRobot;
         private List<RobotElement> _children;
         private Battery _batteryPluged;
 
@@ -22,26 +22,39 @@ namespace AIWar
             _weight = weight;
         }
 
+        public void SetParentRobot(Robot parent)
+        {
+            _parentRobot = parent;
+            foreach(RobotElement re in Children)
+            {
+                re.SetParentRobot(parent);
+            }
+        }
+
         public double Health { get => _health; set => _health = value; }
         public double HealthMax { get => _healthMax; set => _healthMax = value; }
         public double Weight {
-            // on calcul le weight une seuke fois et on =le note.
             get
             {
-                if (_totalWeight == -1)
+                double totalWeight = 0;
+                foreach (RobotElement e in _children)
                 {
-                    foreach (RobotElement e in _children)
-                    {
-                        _totalWeight += e.Weight;
-                    }
-                    _totalWeight += _weight;
+                    totalWeight += e.Weight;
                 }
-                return _totalWeight;
+                totalWeight += _weight;
+                return totalWeight;
             }
         }
         internal List<RobotElement> Children { get => _children; set => _children = value; }
         internal Battery BatteryPluged { get => _batteryPluged; set => _batteryPluged = value; }
+        internal Robot ParentRobot { get => _parentRobot;}
 
+        public void PlugBattery(Battery battery)
+        {
+            BatteryPluged = battery;
+        }
+
+        // IElement Interface
         public void ApplyDamage(Damage dam)
         {
             int nbVictims = Math.Min(Children.Count, dam.DiffusionFactor);
@@ -51,17 +64,32 @@ namespace AIWar
                 victim.ApplyDamage(new Damage(power, dam.DiffusionFactor));
             }
         }
-
-        public void PlugBattery(Battery battery)
+        public void Init()
         {
-            BatteryPluged = battery;
+            //Comon init and checks
+            if (ParentRobot==null)
+            {
+                //raise Error
+            }
+            // specific init
+            OnInit();
+            //passe passe le oinj... l'init
+            foreach (RobotElement re in Children)
+            {
+                Init();
+            }
         }
-
-
-        // IElement Interface
-        public Vector GetForceApplied() { return new Vector(0, 0); }
-        public abstract void ProcessStep(double timeStep);
+        public void ProcessStep(double timeStep)
+        {
+            OnProcessStep(timeStep);
+            foreach (RobotElement re in Children)
+            {
+                ProcessStep(timeStep);
+            }
+        }
         public void OnDeath() { }
+
+        public abstract void OnProcessStep(double timeStep);
         public abstract void OnInit();
     }
 
@@ -79,32 +107,43 @@ namespace AIWar
 
         public override void OnInit()
         {
-            throw new NotImplementedException();
+            //TO DO
         }
 
-        public override void ProcessStep(double timeStep)
+        public override void OnProcessStep(double timeStep)
         {
-            throw new NotImplementedException();
+            //TO DO
         }
     }
 
     class Engine : RobotElement
     {
-        double _accelerationForce;
-        double _powerConsumption; //energy per sec
+        private double _maxPower;
+        private double _efficiency; //in Pct
+        private double _power; //this will be a variable accessible from the user code
 
-        public Engine(double healthMax, double weight) : base(healthMax, weight)
+        public Engine(double healthMax, double weight, double maxPower, double efficiency) : base(healthMax, weight)
         {
+            _maxPower = maxPower;
+            _efficiency = efficiency;
         }
+
+        public double MaxPower { get => _maxPower; }
+        public double Power { get => _power; set => _power = value; }
+        public double Efficiency { get => _efficiency;}
 
         public override void OnInit()
         {
-            throw new NotImplementedException();
+            if (BatteryPluged==null)
+            {
+                //TO DO raise warning
+            }
         }
 
-        public override void ProcessStep(double timeStep)
+        public override void OnProcessStep(double timeStep)
         {
-            throw new NotImplementedException();
+            double powerAvailable = BatteryPluged.UsePower(Power);
+            ParentRobot.AddForceApplied(ParentRobot.Direction * powerAvailable * Efficiency);
         }
     }
 }
