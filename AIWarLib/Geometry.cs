@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace AIWar
 {
-    class Vector
+    public class Vector
     {
         public Vector(double x, double y)
         {
@@ -51,26 +52,26 @@ namespace AIWar
         }
     }
 
-    abstract class Shape
+    public abstract class Shape
     {
     }
 
-    class Rectangle : Shape
+    public class Rectangle : Shape
     {
-        private Vector _l;
         private Vector _w;
+        private Vector _h;
 
-        public Rectangle(Vector l,Vector w)
+        public Rectangle(Vector w,Vector h)
         {
-            L = l;
             W = w;
+            H = h;
         }
 
-        internal Vector W { get => _w; set => _w = value; }
-        internal Vector L { get => _l; set => _l = value; }
+        public Vector W { get => _w; set => _w = value; }
+        public Vector H { get => _h; set => _h = value; }
     }
 
-    class Circle : Shape
+    public class Circle : Shape
     {
         private double _radius;
 

@@ -24,3 +24,21 @@ robot :     - limitation en batterie
 concept : 
 			- 1Vs1 no commande or lagged commande (pour empecher pilotage)
 			- multi robot en mode general des armees (3/10/1000?)
+
+TO DO :
+		- recreer le projet
+		- finir GUI
+		- coder jacquouille (sam)
+		- coder collision
+		- coder la map (bitmap)
+		on fiat un point et:
+		- coder de la decision 
+
+Decision possible:
+	- changer Direction
+	par capteur:
+		on/off
+		engine : power
+		arme : direction + firePower
+		shield : power
+

@@ -12,7 +12,7 @@ namespace AIWar
         private Vector _direction;
         private Vector _forceApplied;
 
-        public Robot(string name):base(name,null,0)
+        public Robot(int id):base(id,null,0)
         {
         }
        
@@ -39,7 +39,7 @@ namespace AIWar
             return true;
         }
 
-        public void Decision(double currentTime)
+        public virtual void Decision(double currentTime)
         {
             //TO DO
         }
@@ -82,7 +82,9 @@ namespace AIWar
         public override void ProcessStep(double timeStep)
         {
             _forceApplied = new Vector(0,0);
+
             Structure.ProcessStep(timeStep);
+
         }
     }
 }

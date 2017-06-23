@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AIWar
+namespace Server
 {
-    class Test
+    class Program
     {
-
+        static void Main(string[] args)
+        {
+        }
     }
 }

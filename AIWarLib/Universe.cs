@@ -10,23 +10,29 @@ namespace AIWar
     {
         //universe config
         private double _startReversionCoeff;
+        private Shape _boardShape;
+        private int _elemIdCount = 1001;
 
         private List<Element> _movingElemList = new List<Element>();
         private List<Element> _staticElemList = new List<Element>();
-        private CollisionManager _collisionManager ;
+        private CollisionManager _collisionManager;
 
-        public Universe()
+        public Universe(Shape boardShape)
         {
             //config
             StartReversionCoeff = 10;
             _collisionManager = new SimpleCollisionManager();
+            _boardShape = boardShape;
         }
 
         public double StartReversionCoeff { get => _startReversionCoeff; set => _startReversionCoeff = value; }
+        internal List<Element> MovingElemList { get => _movingElemList; }
+        internal List<Element> StaticElemList { get => _staticElemList; }
+        internal Shape BoardShape { get => _boardShape; }
 
         public void ProcessStep(double timeStep)
         {
-            foreach (Element elem in _movingElemList)
+            foreach (Element elem in MovingElemList)
             {
                 //get the forces
                 Vector force = GetForces(elem);
@@ -34,7 +40,7 @@ namespace AIWar
                 elem.Speed = elem.Speed + elem.Weight * force * timeStep;
                 elem.Position = elem.Speed * timeStep;
             }
-            foreach (Element me in _movingElemList)
+            foreach (Element me in MovingElemList)
             {
                 //check collision/damages
             }
@@ -45,16 +51,28 @@ namespace AIWar
             // acceleration propre de l'eleelemnt
             Vector force = elem.GetSelfForceApplied();
             // frotteelemnt de demarage
-            Vector startReversion = force/force.norm() * elem.Weight * Math.Exp(-elem.Speed.norm() / StartReversionCoeff);
+            Vector startReversion = force / force.norm() * elem.Weight * Math.Exp(-elem.Speed.norm() / StartReversionCoeff);
             // frotteelemnt du terrain
             Vector frictionForce = -GetFrictionCoeff(elem) * elem.Speed * elem.Weight;
-            return force+startReversion+frictionForce;
+            return force + startReversion + frictionForce;
         }
 
         public double GetFrictionCoeff(Element elem)
         {
             // peut dependre du type de terrain (fonction de position), du type de l'element (un missile ne roule pas) etc...
             return 0;
+        }
+
+        public void ObserverSubscribe(IUniverseObserver obs)
+        {
+            foreach (Element elem in StaticElemList)
+            {
+                elem.ObserverSubscribe(obs);
+            }
+            foreach (Element elem in MovingElemList)
+            {
+                elem.ObserverSubscribe(obs);
+            }
         }
     }
 
