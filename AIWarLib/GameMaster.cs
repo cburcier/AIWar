@@ -67,7 +67,9 @@ namespace AIWar
         {
             List<Drawable> list = new List<Drawable>();
             foreach (Element elem in _univ.GetElems())
-                list.Add(new Drawable(elem.Id, elem.ElemShape, elem.Position, DrawableType.full));
+            {
+                list.Add(new Drawable(elem.Id, elem.ElemShape, elem.Position));
+            }
             return list;
         }
 

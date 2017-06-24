@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AIWar;
+using System.Drawing.Drawing2D;
 
 namespace TheGUI
 {
@@ -68,43 +69,46 @@ namespace TheGUI
                 AIWar.Rectangle board = (AIWar.Rectangle)_gm.GetBoard();
                 g.ScaleTransform((float)(BoardPicture.Width / board.W.x), (float)(BoardPicture.Height / board.H.y));
                 g.DrawRectangle(p, 0, 0, (int)(board.W.x), (int)(board.H.y));
-
+                DrawDrawable(new Drawable(10, new AIWar.Rectangle(new Vector(20, 20), new Vector(-20, 20)), new Vector(30, 30)),g);
                 foreach (Drawable d in _gm.GetDrawables())
                 {
-                    DrawDrawable(d, ref g);
+                    DrawDrawable(d, g);
                 }
             }
         }
 
         //la fonction dur a prononcer:
-        private void DrawDrawable(Drawable d, ref Graphics g)
+        private void DrawDrawable(Drawable d, Graphics g)
         {
             if (d.ElemShape.GetType() == typeof(AIWar.Rectangle))
             {
-                AIWar.Rectangle shape = (AIWar.Rectangle) d.ElemShape;
-                
+                AIWar.Rectangle shape = (AIWar.Rectangle)d.ElemShape;
+                float angle = (float) (Math.Acos((new Vector(1, 0) * shape.W) / shape.W.norm()) / Math.PI * 180);
+                g.TranslateTransform((float)d.Position.x, (float)d.Position.y);
+                g.RotateTransform(angle);
                 if (d.Type == AIWar.DrawableType.full)
                 {
                     Brush p = new SolidBrush(d.Color);
-                    g.FillRectangle(p, (float)d.Position.x, (float)d.Position.y, (int)(shape.W.x), (int)(shape.H.y));
+                    g.FillRectangle(p, 0, 0, (int)(shape.W.x), (int)(shape.H.y));
                 }
                 else
                 {
                     Pen p = new Pen(d.Color, d.PenWidth);
                     g.DrawRectangle(p, (float)d.Position.x, (float)d.Position.y, (int)(shape.W.x), (int)(shape.H.y));
                 }
+                g.ResetTransform();
             }
             else if (d.ElemShape.GetType() == typeof(AIWar.Circle))
             {
                 AIWar.Circle shape = (AIWar.Circle)d.ElemShape;
-                if (d.Type==AIWar.DrawableType.full)
+                if (d.Type == AIWar.DrawableType.full)
                 {
-                    Brush p = new SolidBrush(Color.Blue);
+                    Brush p = new SolidBrush(d.Color);
                     g.FillEllipse(p, (float)(d.Position.x - shape.Radius), (float)(d.Position.y + shape.Radius), (float)(shape.Radius * 2), (float)(shape.Radius * 2));
                 }
                 else
                 {
-                    Pen p = new Pen(Color.Blue, 1);
+                    Pen p = new Pen(d.Color, d.PenWidth);
                     g.DrawEllipse(p, (float)(d.Position.x - shape.Radius), (float)(d.Position.y + shape.Radius), (float)(shape.Radius * 2), (float)(shape.Radius * 2));
                 }
             }

@@ -10,6 +10,8 @@ namespace AIWar
     public enum DrawableType { empty,full }
     public class Drawable
     {
+        static Color[] TeamColor = new Color[4] { Color.Blue, Color.Green, Color.Orange, Color.Black };
+
         Shape _elemShape;
         Vector _position;
         int _id;
@@ -17,12 +19,14 @@ namespace AIWar
         Color _color;
         float _penWidth;
 
-        public Drawable(int id, Shape elemShape, Vector position, DrawableType type)
+        public Drawable(int id, Shape s, Vector p)
         {
-            _elemShape = elemShape;
-            _position = position;
-            _type = type;
+            _elemShape = s;
+            _position = p;
+            _type = DrawableType.full;
             _id = id;
+            _color = Color.Blue;
+            _penWidth = 1;
         }
 
         public Shape ElemShape { get => _elemShape;}
@@ -31,5 +35,6 @@ namespace AIWar
         public int Id { get => _id;}
         public Color Color { get => _color; set => _color = value; }
         public float PenWidth { get => _penWidth; set => _penWidth = value; }
+
     }
 }

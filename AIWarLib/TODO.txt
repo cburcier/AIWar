@@ -26,12 +26,12 @@ concept :
 			- multi robot en mode general des armees (3/10/1000?)
 
 TO DO :
-		- recreer le projet
-		- finir GUI
+		- recreer le projet(Done)
+		- finir GUI (Done)
 		- coder jacquouille (sam)
-		- coder collision
+		- coder collision(sam)
 		- coder la map (bitmap)
-		on fiat un point et:
+		on fait un point et:
 		- coder de la decision 
 
 Decision possible:

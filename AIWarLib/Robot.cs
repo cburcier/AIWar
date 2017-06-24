@@ -83,8 +83,8 @@ namespace AIWar
 
         public override void ProcessStep(double timeStep)
         {
-            _forceApplied = new Vector(0,0);
-            Structure.ProcessStep(timeStep);
+            _forceApplied = new Vector(100,100);
+            //Structure.ProcessStep(timeStep);
 
         }
     }
