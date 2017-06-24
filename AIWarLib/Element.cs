@@ -11,12 +11,11 @@ namespace AIWar
 
         private int _id;
         private Shape _elemShape;
-        private Vector _position;
-        private Vector _prevPosition;
+        private Vector _position = new Vector(0, 0);
+        private Vector _prevPosition = new Vector(0, 0);
         private double _weight;
         private bool _isStatic;
-        private Vector _speed;
-        private List<IUniverseObserver> _observerList;
+        private Vector _speed = new Vector(0,0);
 
         public Element(int id, Shape shape, double weight)
         {
@@ -29,7 +28,7 @@ namespace AIWar
             }
         }
 
-        public int Id { get => Id; }
+        public int Id { get => _id; }
         internal Vector Position
         {
             get => _position;
@@ -37,10 +36,6 @@ namespace AIWar
             {
                 PrevPosition = _position;
                 _position = value;
-                foreach (IUniverseObserver obs in _observerList)
-                {
-                    obs.UpdateDrawable(GetDrawable());
-                }
             }
         }
         internal Shape ElemShape { get => _elemShape; set => _elemShape = value; }
@@ -56,16 +51,5 @@ namespace AIWar
         public abstract void OnDeath();
         public abstract void ApplyDamage(Damage d);
         public abstract void ProcessStep(double timeStep);
-
-        public Drawable GetDrawable()
-        {
-            return new Drawable(Id, ElemShape, Position, DrawableType.full);
-        }
-
-        public void ObserverSubscribe(IUniverseObserver obs)
-        {
-            _observerList.Add(obs);
-            obs.UpdateDrawable(GetDrawable());
-        }
     }
 }

@@ -9,11 +9,13 @@ namespace AIWar
     class Robot : Element
     {
         private RobotStructure _structure;
-        private Vector _direction;
-        private Vector _forceApplied;
+        private Vector _direction = new Vector(0, 0);
+        private Vector _forceApplied = new Vector(0,0);
 
         public Robot(int id):base(id,null,0)
         {
+            ElemShape = new Circle(5);
+            Position = new Vector(10, 20);
         }
        
         internal RobotStructure Structure { get => _structure; set => _structure = value; }
@@ -82,7 +84,6 @@ namespace AIWar
         public override void ProcessStep(double timeStep)
         {
             _forceApplied = new Vector(0,0);
-
             Structure.ProcessStep(timeStep);
 
         }

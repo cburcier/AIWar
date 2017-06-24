@@ -65,6 +65,7 @@
             this.btnPause.TabIndex = 1;
             this.btnPause.Text = "pause";
             this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // BoardPicture
             // 
@@ -73,7 +74,9 @@
             this.BoardPicture.Name = "BoardPicture";
             this.BoardPicture.Size = new System.Drawing.Size(1062, 483);
             this.BoardPicture.TabIndex = 1;
-            this.BoardPicture.TabStop = false;;
+            this.BoardPicture.TabStop = false;
+            this.BoardPicture.SizeChanged += new System.EventHandler(this.BoardPicture_SizeChanged);
+            this.BoardPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.BoardPicture_Paint);
             // 
             // Board
             // 
@@ -84,15 +87,11 @@
             this.Controls.Add(this.ControlsLayout);
             this.Name = "Board";
             this.Text = "BoardControl";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Board_FormClosing);
             this.ControlsLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.BoardPicture)).EndInit();
             this.ResumeLayout(false);
 
-        }
-
-        private void BoardPicture_Paint1(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-            throw new System.NotImplementedException();
         }
 
         #endregion

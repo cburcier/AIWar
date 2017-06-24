@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +53,7 @@
     <Compile Include="RobotUtils.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Universe.cs" />
-    <Compile Include="UniverseObserver.cs" />
+    <Compile Include="Drawable.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>

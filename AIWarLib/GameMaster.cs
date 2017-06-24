@@ -14,12 +14,18 @@ namespace AIWar
         private double _timeStep;
         private double _gameTotalTime;
         private Universe _univ;
+        double _currentTime = 0;
+        bool _init = false;
 
         //double list for list of opponent, each opponent as a list of bot
-        private List<RobotTeam> _robotsList;
+        private List<RobotTeam> _robotsList = new List<RobotTeam>();
 
         public double TimeStep { get => _timeStep; }
         public double GameTotalTime { get => _gameTotalTime; }
+        public bool HasInit()
+        {
+            return _init;
+        }
         public Shape GetBoard() { return _univ.BoardShape; }
 
         public void Init()
@@ -29,35 +35,40 @@ namespace AIWar
             _gameTotalTime = 600;
 
             //init Universe
-            Rectangle shape = new Rectangle(new Vector(100, 0), new Vector(0, 100)); // FIXME faut initializer proprement !
+            Rectangle shape = new Rectangle(new Vector(500, 0), new Vector(0, 300)); // FIXME faut initializer proprement !
             _univ = new Universe(shape);
 
             //init robot
-
+            RobotTeam party1 = new RobotTeam();
+            Robot robot1 = new Robot(1);
+            robot1.Weight = 1;
+            _univ.MovingElemList.Add(robot1);
+            party1.Add(robot1);
+            _robotsList.Add(party1);
+            _init = true;
         }
 
-        public void RunGame()
+        public void NextStep()
         {
-            double currentTime = 0;
-            for (int i = 0; i < GameTotalTime / TimeStep; ++i)
+            //Process decision function on robot
+            foreach (RobotTeam botList in _robotsList)
             {
-                //Process decision function on robot
-                foreach (RobotTeam botList in _robotsList)
+                foreach (Robot bot in botList)
                 {
-                    foreach (Robot bot in botList)
-                    {
-                        bot.Decision(currentTime);
-                    }
+                    bot.Decision(_currentTime);
                 }
-                _univ.ProcessStep(TimeStep);
-                //Move the universe to next timeStep
-                currentTime += TimeStep;
             }
+            _univ.ProcessStep(TimeStep);
+            //Move the universe to next timeStep
+            _currentTime += TimeStep;
         }
 
-        public void ObserverSubscribe(IUniverseObserver obs)
+        public List<Drawable> GetDrawables()
         {
-            _univ.ObserverSubscribe(obs);
+            List<Drawable> list = new List<Drawable>();
+            foreach (Element elem in _univ.GetElems())
+                list.Add(new Drawable(elem.Id, elem.ElemShape, elem.Position, DrawableType.full));
+            return list;
         }
 
     }

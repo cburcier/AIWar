@@ -34,6 +34,8 @@ namespace AIWar
         {
             foreach (Element elem in MovingElemList)
             {
+                //processStep on each elem
+                elem.ProcessStep(timeStep);
                 //get the forces
                 Vector force = GetForces(elem);
                 //get the next Position 
@@ -50,11 +52,9 @@ namespace AIWar
         {
             // acceleration propre de l'eleelemnt
             Vector force = elem.GetSelfForceApplied();
-            // frotteelemnt de demarage
-            Vector startReversion = force / force.norm() * elem.Weight * Math.Exp(-elem.Speed.norm() / StartReversionCoeff);
-            // frotteelemnt du terrain
+            // frottement du terrain
             Vector frictionForce = -GetFrictionCoeff(elem) * elem.Speed * elem.Weight;
-            return force + startReversion + frictionForce;
+            return force + frictionForce;
         }
 
         public double GetFrictionCoeff(Element elem)
@@ -63,16 +63,11 @@ namespace AIWar
             return 0;
         }
 
-        public void ObserverSubscribe(IUniverseObserver obs)
+        public List<Element> GetElems()
         {
-            foreach (Element elem in StaticElemList)
-            {
-                elem.ObserverSubscribe(obs);
-            }
-            foreach (Element elem in MovingElemList)
-            {
-                elem.ObserverSubscribe(obs);
-            }
+            List<Element> list = new List<Element>(StaticElemList);
+            list.AddRange(MovingElemList);
+            return list;
         }
     }
 

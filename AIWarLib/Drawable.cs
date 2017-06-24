@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AIWar
 {
@@ -13,6 +14,8 @@ namespace AIWar
         Vector _position;
         int _id;
         DrawableType _type;
+        Color _color;
+        float _penWidth;
 
         public Drawable(int id, Shape elemShape, Vector position, DrawableType type)
         {
@@ -26,10 +29,7 @@ namespace AIWar
         public Vector Position { get => _position;}
         public DrawableType Type { get => _type;}
         public int Id { get => _id;}
-    }
-
-    public interface IUniverseObserver
-    {
-        void UpdateDrawable(Drawable d);
+        public Color Color { get => _color; set => _color = value; }
+        public float PenWidth { get => _penWidth; set => _penWidth = value; }
     }
 }

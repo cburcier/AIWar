@@ -77,7 +77,7 @@ namespace AIWar
 
         public Circle(double radius)
         {
-            Radius = Radius;
+            Radius = radius;
         }
 
         public double Radius { get => _radius; set => _radius = value; }
